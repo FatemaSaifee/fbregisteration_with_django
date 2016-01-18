@@ -5,9 +5,10 @@ class Profile(models.Model):
   # user = models.ForeignKey(User, unique=True)
   user = models.OneToOneField(User)
 
+  picture = models.URLField(max_length=255, blank=True, null=True)
   facebook_uid = models.PositiveIntegerField(blank=True, null=True)
   facebook_access_token = models.CharField(blank=True, max_length=255)
   facebook_access_token_expires = models.PositiveIntegerField(blank=True, null=True)
 
   def __str__(self):
-  	return self.user
+  	return str(self.user)

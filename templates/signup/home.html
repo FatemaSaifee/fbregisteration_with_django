@@ -31,6 +31,7 @@
            
              <a>Hello {{ user.get_full_name|default:user.username }}!</a><br>
              ID : {{user.profile.facebook_uid}}
+             <center><img src="{{user.profile.picture}}"></center>
          {% else %}
             <div class="col-md-4">
             <div class="panel panel-default text-center">

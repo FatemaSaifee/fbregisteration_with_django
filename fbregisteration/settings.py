@@ -107,6 +107,9 @@ os.path.join(BASE_DIR, "static"),
 '/var/www/ims-website/static/',
 )
 
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a # trailing slash.
+# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+MEDIA_URL = '/media/'
 FACEBOOK_APP_ID = '1645008752430171'
 FACEBOOK_SECRET_KEY = 'ba777214c5addd608928a6e2a4ac57d0'
