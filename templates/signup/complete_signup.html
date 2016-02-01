@@ -1,0 +1,67 @@
+{% extends "signup/base.html" %}
+
+{% block login_logout %} 
+  <!-- if user is logged if show logout button-->
+  {% if user and not user.is_anonymous %}
+    <a href="{% url 'profiles:logout' %}?next={{ request.path }}">Logout</a>
+  {% else %}
+  <!-- if user is not logged in show login button -->
+    <a class="ui-button" href="https://www.facebook.com/dialog/oauth?
+            client_id={{facebook_app_id}}
+            &amp;redirect_uri=http://localhost:8000/{% url 'profiles:facebook' %}">Login</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<!-- Page heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 style="font-face:Liberation Serif" class="page-header">Facebook Integration Demo
+        </h1>
+    </div>
+</div>
+
+<!-- page content -->
+<div class="row">
+    <div class="col-md-4">
+    </div>
+   
+   <div class="col-md-4 form">
+   		<div class="form-body">
+	    <form method="post">{% csrf_token %}
+	   		<div class="form-body panel panel-default text-center">
+	   			<div class="panel-heading">
+	                <h3 class="panel-title">{{profile.user}} Complete Signup Here</h3>
+	            </div>
+	            <!-- panel body -->
+	            <div class="panel-body">
+	            <br>
+	            	{% for field in form %}
+			   		<div class="form-group">
+				   		<div class="col-md-5">
+				   			<label>{{field.label}}</label>
+				   		</div>
+				   		<div class="col-md-7">
+				   			{{field}}
+				   		</div>
+				   	</div><br>
+				   	{% endfor %}
+				   	<hr>
+				   	<div class="form-actions">
+		                <div class="row">
+		                    <div class="col-md-offset-1 col-md-9">
+		                        <button type="submit" class="btn-primary btn-circle">Submit</button>
+		                        <a href="{% url 'profiles:home' %}"><button type="button" class="btn-alert btn-circle">Cancel</button></a>
+		                    </div>
+		                </div>
+		            </div>
+				</div>
+				<!-- panel body end -->
+			</div>
+	   </form>
+    </div>
+
+  <div class="col-md-4">
+  </div>
+</div>
+{% endblock %}
