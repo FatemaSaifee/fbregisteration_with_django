@@ -27,38 +27,43 @@
     </div>
     <!-- if user is logged in show his/her profile details -->
     {% if user and not user.is_anonymous %}
-        <div class="col-md-4">
-      <div class="panel panel-default text-center">
-        <div class="panel-heading">
-                <h3 class="panel-title">Welcome</h3>
+    <div class="col-md-4">
+        <div class="panel panel-default text-center">
+            <div class="panel-heading">
+                <h3 class="panel-title">Welcome!!</h3>
             </div>
             <div class="panel-body">
-            <div class="row">
-              <div class="col-md-6">
-                 <center><img src="{{user.profile.picture}}"></center>
-              </div>
-              <div style="padding:12%" class="col-md-6">
-                 <a>Hello {{ user.get_full_name|default:user.username }}!</a><br>
-                 ID : {{user.profile.facebook_uid}}
-              </div>
-            </div>
-         <!-- if user is not logged in, allow him to log in -->
-         {% else %}
-            <div class="col-md-4">
-            <div class="panel panel-default text-center">
-              <div class="panel-heading">
-                      <h3 class="panel-title">Login/Signup</h3>
+                <div class="row">
+                  <div class="col-md-6">
+                     <center><img src="{{user.profile.picture}}"></center>
                   </div>
+                  <div  class="col-md-6">
+                     <a>Hello {{ user.get_full_name|default:user.username }}!</a><hr>
+                     ID : {{user.profile.facebook_uid}} <hr>
+                     child of {{user.profile.father_name}}<hr>
+                     Your Hobbies are {{user.profile.hobbies}}<hr>
+                     You live at {{user.profile.address}}
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+         <!-- if user is not logged in, allow him to log in -->
+     {% else %}
+    <div class="col-md-4">
+        <div class="panel panel-default text-center">
+            <div class="panel-heading">
+                <h3 class="panel-title">Login/Signup</h3>
+            </div>
             <div class="panel-body">
-              <a class="btn btn-primary" href="https://www.facebook.com/dialog/oauth?
-            client_id={{facebook_app_id}}
-            &amp;redirect_uri=http://localhost:8000/{% url 'profiles:facebook' %}">Connect with Facebook</a>
+                  <a class="btn btn-primary" href="https://www.facebook.com/dialog/oauth?
+                client_id={{facebook_app_id}}
+                &amp;redirect_uri=http://localhost:8000/{% url 'profiles:facebook' %}">Connect with Facebook</a>
+            </div>
+        </div>
+    </div>
    {% endif %}
 
-      </div>
-      
-    </div>
-  </div>
   <div class="col-md-4">
   </div>
 </div>
