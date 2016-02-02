@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Profile(models.Model):
-  # user = models.ForeignKey(User, unique=True)
   user = models.OneToOneField(User)
 
   picture = models.URLField(max_length=255, blank=True, null=True)

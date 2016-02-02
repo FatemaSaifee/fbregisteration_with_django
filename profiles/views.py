@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout as django_logout
 from django.core.urlresolvers import reverse_lazy
+from django.views.generic.edit import UpdateView
 
 try:
     from django.utils import simplejson as json
@@ -41,7 +42,7 @@ def facebook(request):
   http = httplib2.Http(timeout=15)
   response, content = http.request('https://graph.facebook.com/oauth/access_token?%s' % urllib.urlencode(params))
 
-  # Find access token and expire (this is really gross)
+  # Find access token and expire 
   params = content.split('&')
   # pdb.set_trace()
   ACCESS_TOKEN = params[0].split('=')[1]
@@ -50,7 +51,6 @@ def facebook(request):
   # Get basic information about the person
   response, content = http.request('https://graph.facebook.com/me?access_token=%s' % ACCESS_TOKEN)
   data = json.loads(content)
-  # pdb.set_trace()
   # Try to find existing profile, create a new user if one doesn't exist
   try:
     profile = Profile.objects.get(facebook_uid=data['id'])
@@ -75,7 +75,7 @@ def facebook(request):
     profile.facebook_access_token = ACCESS_TOKEN
     profile.facebook_access_token_expires = EXPIRE
     profile.save()
-    # Complete the registration
+    # go to Complete the registration
     return HttpResponseRedirect(reverse_lazy('profiles:complete_signup',kwargs={'pk': profile.pk}))
   # Update token and expire fields on profile
   profile.facebook_access_token = ACCESS_TOKEN
@@ -88,20 +88,11 @@ def facebook(request):
 
   return HttpResponseRedirect('/')
 
-
-from django.views.generic.edit import UpdateView
-
-
-
 class CompleteSignupView(UpdateView):
   model = Profile
   fields = ['father_name',"address","hobbies"]
   template_name = "signup/complete_signup.html"
   success_url=reverse_lazy('profiles:home')
-
-  # def get_object(self, queryset=None):
-  #   pdb.set_trace()
-  #   return self.request.user
 
   def form_valid(self, form):
     self.object = form.save()

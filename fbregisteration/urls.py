@@ -16,27 +16,16 @@ Including another URLconf
 
 # import pdb
 
-# pdb.set_trace()
 from django.conf.urls import include, url
 from django.contrib import admin
-# from profiles.views import CompleteSignupView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 #for loading static files:
 from django.conf.urls.static import static
 from django.conf import settings
 
-
-
 urlpatterns = [
-	url(r'^static/(?P<path>.*)$',
-    'django.views.static.serve',
-    {'document_root': settings.STATIC_ROOT}),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('profiles.urls', namespace='profiles')),
-    # url(r'^complete_signup/(?P<pk>\d+)/', CompleteSignupView.as_view(), name='complete_signup'),
-
-    
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += staticfiles_urlpatterns()
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
